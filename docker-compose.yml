@@ -1,0 +1,22 @@
+version: '3'
+services:
+ lsyncd:
+   build: ./lsyncd
+   volumes:
+     - ./source-data:/data
+     - ./lsyncd-logs:/var/log/lsyncd/
+   environment:
+     - SYNC_TARGETS="target1,target2"
+   depends_on:
+     - target1
+     - target2
+ target1:
+   build: ./sftp
+   volumes:
+     - ./target-data-1:/home/user1/data
+   command: user1:password1
+ target2:
+   build: ./sftp
+   volumes:
+     - ./target-data-2:/home/user2/data
+   command: user2:password2
